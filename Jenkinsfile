@@ -52,13 +52,16 @@ pipeline {
 
 stage("Build Docker file") {
             steps {
-                sh "docker build . -t seshagirisriram/demoreposapp:latest -f DockerfileBuild" 
+				withCredentials([usernamePassword(credentialsId: 'DockerHub_Credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
+			sh 'echo $PASSWORD | docker login -u  $USER --password-stdin'
+			sh 'docker pull ubuntu' 
+            sh "docker build . -t seshagirisriram/demoreposapp:latest -f DockerfileBuild" 
+			}
             }
         }
 		
 		stage("Push to Docker Hub") {
             steps {
-                //sh "mvn package install"
 				withCredentials([usernamePassword(credentialsId: 'DockerHub_Credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
 			sh 'echo $PASSWORD | docker login -u  $USER --password-stdin'
 			sh 'docker push seshagirisriram/demoreposapp:latest'
