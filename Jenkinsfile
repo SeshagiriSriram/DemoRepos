@@ -52,7 +52,7 @@ pipeline {
 
 stage("Build Docker file") {
             steps {
-                echo "Yet to be implemented" 
+                sh "docker build . -t seshagirisriram/demoreposapp -f DockerfileBuild" 
             }
         }
 
