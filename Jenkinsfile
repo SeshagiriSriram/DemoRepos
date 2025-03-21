@@ -55,6 +55,15 @@ stage("Build Docker file") {
                 sh "docker build . -t seshagirisriram/demoreposapp -f DockerfileBuild" 
             }
         }
+		
+		stage("Push to Docker Hub") {
+            steps {
+                //sh "mvn package install"
+				withCredentials([usernamePassword(credentialsId: 'DockerHub_Credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
+			sh 'echo $PASSWORD | docker login -u  $USER'
+}
+            }
+        }
 
     }
 
