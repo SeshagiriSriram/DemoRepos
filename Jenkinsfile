@@ -44,12 +44,17 @@ pipeline {
 		//}
 	//} 
 
-	stage("Deploy") {
+	stage("Package & Deploy") {
             steps {
-                sh "mvn install"
+                sh "mvn package install"
             }
         }
 
+stage("Build Docker file") {
+            steps {
+                echo "Yet to be implemented" 
+            }
+        }
 
     }
 
