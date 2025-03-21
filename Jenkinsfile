@@ -46,7 +46,7 @@ pipeline {
 
 	stage("Package & Deploy") {
             steps {
-                sh "mvn package'
+                sh 'mvn package'
 				sh 'jar --update --verbose --file ./target/maven-pipeline-demo-1.0-SNAPSHOT.jar   --main-class com.github.wololock.App'
 				sh 'mvn install'
 				sh 'cp ./target/maven-pipeline-demo-1.0-SNAPSHOT.jar demo.jar' 
