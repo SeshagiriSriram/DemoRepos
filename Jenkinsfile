@@ -46,7 +46,10 @@ pipeline {
 
 	stage("Package & Deploy") {
             steps {
-                sh "mvn package install"
+                sh "mvn package'
+				sh 'jar --update --verbose --file ./target/maven-pipeline-demo-1.0-SNAPSHOT.jar   --main-class com.github.wololock.App'
+				sh 'mvn install'
+				sh 'cp ./target/maven-pipeline-demo-1.0-SNAPSHOT.jar demo.jar' 
             }
         }
 
@@ -55,7 +58,7 @@ stage("Build Docker file") {
 				withCredentials([usernamePassword(credentialsId: 'DockerHub_Credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
 			sh 'echo $PASSWORD | docker login -u  $USER --password-stdin'
 			sh 'docker pull ubuntu' 
-            sh "docker build . -t seshagirisriram/demoreposapp:latest -f DockerfileBuild" 
+            sh "docker build . -t demoreposapp:latest -f DockerfileBuild" 
 			}
             }
         }
@@ -64,6 +67,7 @@ stage("Build Docker file") {
             steps {
 				withCredentials([usernamePassword(credentialsId: 'DockerHub_Credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
 			sh 'echo $PASSWORD | docker login -u  $USER --password-stdin'
+			sh 'docker tag demoreposapp:latest seshagirisriram/demoreposapp:latest' 
 			sh 'docker push seshagirisriram/demoreposapp:latest'
 			//sh 'docker push seshagirisriram/demoreposapp'
 			sh 'docker logout'

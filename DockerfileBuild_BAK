@@ -1,0 +1,15 @@
+FROM ubuntu
+RUN apt-get update && apt-get install -y default-jdk maven 
+#FROM ssriram12/maven-3.9.9:jdk13
+COPY . /src
+WORKDIR /src
+# package the application 
+RUN mvn clean package
+# Update Manifest files 
+RUN jar --update --verbose --file ./target/maven-pipeline-demo-1.0-SNAPSHOT.jar --main-class com.github.wololock.App
+# Rename the jar 
+RUN mv ./target/maven-pipeline-demo-1.0-SNAPSHOT.jar demo.jar 
+# finally clean up 
+RUN mvn clean 
+# if you wnt to run 
+# java -jar demo.jar 
