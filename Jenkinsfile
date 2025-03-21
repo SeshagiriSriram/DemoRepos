@@ -66,13 +66,14 @@ stage("Build Docker file") {
 		stage("Push to Docker Hub") {
             steps {
 				withCredentials([usernamePassword(credentialsId: 'DockerHub_Credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
-			sh 'echo $PASSWORD | docker login -u  $USER --password-stdin'
-			sh 'docker tag demoreposapp:latest seshagirisriram/demoreposapp:latest' 
-			sh 'docker images | grep seshagirisriram' 
-			//sh 'docker push seshagirisriram/demoreposapp:latest'
-			//sh 'docker push seshagirisriram/demoreposapp'
-			sh 'docker logout'
-}
+				sh '''
+				echo $PASSWORD | docker login -u  $USER --password-stdin
+				docker tag demoreposapp:latest seshagirisriram/demoreposapp:latest
+				docker images | grep seshagirisriram
+				docker push seshagirisriram/demoreposapp:latest
+				docker logout
+				'''
+				}
             }
         }
 
