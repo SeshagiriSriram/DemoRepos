@@ -5,7 +5,7 @@ pipeline {
         JAVA_TOOL_OPTIONS = "-Duser.home=/tmp/maven"
         DEMO="Demo"
     }
-   agent  
+   agent  { any  } 
    //{  
       // docker {
          // image "ssriram12/maven-3.9.9:jdk13"
@@ -13,7 +13,7 @@ pipeline {
            //args "-v /tmp/maven:/tmp/maven -e MAVEN_CONFIG=/tmp/maven"
         //}
 		//} 
- any 
+ //any 
     
 
     stages {
