@@ -61,6 +61,7 @@ stage("Build Docker file") {
                 //sh "mvn package install"
 				withCredentials([usernamePassword(credentialsId: 'DockerHub_Credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
 			sh 'echo $PASSWORD | docker login -u  $USER --password-stdin'
+			sh 'docker push seshagirisriram/demoreposapp'
 			sh 'docker logout'
 }
             }
