@@ -70,7 +70,6 @@ stage("Build Docker file") {
 				echo $PASSWORD | docker login -u  $USER --password-stdin
 				docker tag demoreposapp:latest seshagirisriram/demoreposapp:latest
 				docker images | grep seshagirisriram
-				docker push seshagirisriram/demoreposapp:latest
 				docker logout
 				'''
 				}
